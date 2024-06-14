@@ -1,3 +1,22 @@
+:root {
+  --button-padding: 0.5rem 1rem; /* Default padding for buttons */
+  --button-font-size: 1rem; /* Default font size for buttons */
+}
+
+@media (min-width: 600px) {
+  :root {
+    --button-padding: 0.75rem 1.5rem; /* Larger padding for bigger screens */
+    --button-font-size: 1.25rem; /* Larger font size for bigger screens */
+  }
+}
+
+@media (min-width: 900px) {
+  :root {
+    --button-padding: 1rem 2rem; /* Even larger padding for large screens */
+    --button-font-size: 1.5rem; /* Even larger font size for large screens */
+  }
+}
+
 body {
   width: 100vw;
   height: 100vh;
@@ -54,9 +73,8 @@ body {
 .controls button {
   border: 2px solid black;
   border-radius: 5px;
-  padding: 10px 20px;
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
+  padding: var(--button-padding);
+  font-size: var(--button-font-size);
 }
 #shootBtn {
   background-color: red;
