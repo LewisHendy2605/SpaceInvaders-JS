@@ -67,7 +67,7 @@ body {
 .controls {
   width: 80vw;
   max-width: 600px;
-  height: 20vw;
+  height: 40vw;
   max-height: 600px;
   display: flex;
   flex-direction: column;
@@ -80,6 +80,7 @@ body {
   padding: var(--button-padding);
   font-size: var(--button-font-size);
   touch-action: manipulation; /* Prevents double-tap to zoom */
+  flex: 1;
 }
 #shootBtn {
   background-color: red;
@@ -91,9 +92,9 @@ body {
   display: flex;
   flex-direction: row;
   gap: 0.5rem;
+  flex: 1;
 }
 .move-controls button {
-  flex: 1;
   background-color: green;
   touch-action: manipulation; /* Prevents double-tap to zoom */
 }
