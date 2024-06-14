@@ -2,6 +2,7 @@ body {
   width: 100vw;
   height: 100vh;
   background-color: white;
+  margin: 0;
 }
 
 .game-div {
@@ -9,20 +10,25 @@ body {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  gap: 20px;
+  gap: 2rem;
+  margin-bottom: 5rem;
 }
 
 .grid {
-  width: 300px;
-  height: 300px;
-  border: solid 7px black;
+  width: 80vw;
+  max-width: 600px;
+  height: 80vw;
+  max-height: 600px;
+  border: solid 0.5rem black;
   display: flex;
   flex-wrap: wrap;
 }
 
 .grid div {
-  width: 20px;
-  height: 20px;
+  width: calc(100% / 15);
+  height: calc(100% / 15);
+  box-sizing: border-box;
+  border: 1px solid #ccc;
 }
 
 .invader {
@@ -46,14 +52,15 @@ body {
   transform: translateX(-50%);
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 1rem;
 }
 
 .controls button {
   border: 2px solid black;
   border-radius: 5px;
   padding: 10px 20px;
-  font-size: 16px;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
 }
 #shootBtn {
   background-color: red;
@@ -61,7 +68,7 @@ body {
 
 .move-controls {
   flex-direction: row;
-  gap: 10px;
+  gap: 0.5rem;
 }
 .move-controls button {
   background-color: green;
