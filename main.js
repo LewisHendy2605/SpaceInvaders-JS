@@ -49,6 +49,24 @@ function moveShooter(e) {
 
 document.addEventListener("keydown", moveShooter);
 
+// Function to move shooter left
+function moveShooterLeft() {
+  squares[currentShooterIndex].classList.remove("shooter");
+  if (currentShooterIndex % width !== 0) currentShooterIndex -= 1;
+  squares[currentShooterIndex].classList.add("shooter");
+}
+
+// Function to move shooter right
+function moveShooterRight() {
+  squares[currentShooterIndex].classList.remove("shooter");
+  if (currentShooterIndex % width < width - 1) currentShooterIndex += 1;
+  squares[currentShooterIndex].classList.add("shooter");
+}
+
+// Event listeners for touch controls
+document.getElementById("leftBtn").addEventListener("click", moveShooterLeft);
+document.getElementById("rightBtn").addEventListener("click", moveShooterRight);
+
 function removeInvaders() {
   for (let i = 0; i < alienInvaders.length; i++) {
     squares[alienInvaders[i]].classList.remove("invader");
@@ -123,9 +141,10 @@ function shoot(e) {
     }
   }
 
-  if (e.key === "ArrowUp") {
+  if (e.key === "ArrowUp" || e.type === "click") {
     laserId = setInterval(moveLaser, 100);
   }
 }
 
 document.addEventListener("keydown", shoot);
+document.getElementById("shootBtn").addEventListener("click", shoot);
