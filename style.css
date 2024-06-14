@@ -79,6 +79,7 @@ body {
   border-radius: 5px;
   padding: var(--button-padding);
   font-size: var(--button-font-size);
+  touch-action: manipulation; /* Prevents double-tap to zoom */
 }
 #shootBtn {
   background-color: red;
@@ -94,4 +95,5 @@ body {
 .move-controls button {
   flex: 1;
   background-color: green;
+  touch-action: manipulation; /* Prevents double-tap to zoom */
 }
