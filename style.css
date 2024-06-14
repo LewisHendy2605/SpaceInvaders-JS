@@ -1,9 +1,15 @@
 body {
+  width: 100vw;
+  height: 100vh;
   background-color: white;
+}
+
+.game-div {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  gap: 20px;
 }
 
 .grid {
@@ -55,6 +61,7 @@ body {
 
 .move-controls {
   flex-direction: row;
+  gap: 10px;
 }
 .move-controls button {
   background-color: green;
