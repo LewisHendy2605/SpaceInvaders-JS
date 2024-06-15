@@ -26,16 +26,27 @@ const alienInvaders = [
 function draw() {
   for (let i = 0; i < alienInvaders.length; i++) {
     if (!invadersRemoved.includes(i)) {
-      squares[alienInvaders[i]].classList.add("invader");
+      const square = squares[alienInvaders[i]];
+      square.classList.add("invader");
+
+      // Check if the image is already appended
+      if (!square.querySelector("img")) {
+        const img = document.createElement("img");
+        img.src = "images/SpaceInvadersGreen.png";
+        img.alt = "Invader"; // Adding alt text for accessibility
+        img.style.width = "100%"; // Ensures the image fits the square
+        img.style.height = "100%"; // Ensures the image fits the square
+        square.appendChild(img);
+      }
     }
   }
 }
 draw();
 
-squares[currentShooterIndex].classList.add("shooter");
+addShooter();
 
 function moveShooter(e) {
-  squares[currentShooterIndex].classList.remove("shooter");
+  removeShooter();
   switch (e.key) {
     case "ArrowLeft":
       if (currentShooterIndex % width !== 0) currentShooterIndex -= 1;
@@ -44,23 +55,56 @@ function moveShooter(e) {
       if (currentShooterIndex % width < width - 1) currentShooterIndex += 1;
       break;
   }
-  squares[currentShooterIndex].classList.add("shooter");
+  addShooter();
 }
 
 document.addEventListener("keydown", moveShooter);
 
+function removeShooter() {
+  const shooterElem = squares[currentShooterIndex];
+  shooterElem.classList.remove("shooter");
+  const shooterImg = shooterElem.querySelector("img");
+  if (shooterImg) {
+    shooterImg.remove();
+  }
+}
+
+/*
+squares[alienInvaders[i]].classList.remove("invader");
+    const img = squares[alienInvaders[i]].querySelector("img");
+    if (img) {
+      img.remove(); // This removes the img element from the DOM
+    }
+*/
+
+function addShooter() {
+  const shooter = squares[currentShooterIndex];
+
+  shooter.classList.add("shooter");
+  // Check if the image is already appended
+  if (!shooter.querySelector("img")) {
+    const img = document.createElement("img");
+    img.src = "images/Ship.png";
+    img.alt = "Invader"; // Adding alt text for accessibility
+    img.style.width = "100%"; // Ensures the image fits the square
+    img.style.height = "100%"; // Ensures the image fits the square
+    shooter.appendChild(img);
+  }
+}
+
 // Function to move shooter left
 function moveShooterLeft() {
-  squares[currentShooterIndex].classList.remove("shooter");
+  removeShooter();
   if (currentShooterIndex % width !== 0) currentShooterIndex -= 1;
-  squares[currentShooterIndex].classList.add("shooter");
+  addShooter();
 }
 
 // Function to move shooter right
 function moveShooterRight() {
-  squares[currentShooterIndex].classList.remove("shooter");
+  removeShooter();
+
   if (currentShooterIndex % width < width - 1) currentShooterIndex += 1;
-  squares[currentShooterIndex].classList.add("shooter");
+  addShooter();
 }
 
 // Event listeners for touch controls
@@ -70,6 +114,10 @@ document.getElementById("rightBtn").addEventListener("click", moveShooterRight);
 function removeInvaders() {
   for (let i = 0; i < alienInvaders.length; i++) {
     squares[alienInvaders[i]].classList.remove("invader");
+    const img = squares[alienInvaders[i]].querySelector("img");
+    if (img) {
+      img.remove(); // This removes the img element from the DOM
+    }
   }
 }
 

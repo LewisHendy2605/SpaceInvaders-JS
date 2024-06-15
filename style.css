@@ -46,16 +46,6 @@ body {
 .grid div {
   width: calc(100% / 15);
   height: calc(100% / 15);
-  box-sizing: border-box;
-  border: 1px solid #ccc;
-}
-
-.invader {
-  background-color: purple;
-  border-radius: 10px;
-}
-.shooter {
-  background-color: green;
 }
 .laser {
   background-color: orange;
