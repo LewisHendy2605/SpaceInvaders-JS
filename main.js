@@ -160,10 +160,12 @@ function moveInvaders() {
   if (squares[currentShooterIndex].classList.contains("invader")) {
     resultDisplay.innerHTML = "GAME OVER";
     clearInterval(invadersId);
+    clearInterval(asteroidId);
   }
   if (invadersRemoved.length === alienInvaders.length) {
     resultDisplay.innerHTML = "YOU WIN";
     clearInterval(invadersId);
+    clearInterval(asteroidId);
   }
 }
 invadersId = setInterval(moveInvaders, 600);
@@ -235,6 +237,7 @@ function addRandomAsteroid() {
   // Returns a random integer from 0 to 1:
   currentAsteroidIndex = Math.floor(Math.random() * 15);
   addAsteroid(currentAsteroidIndex);
+  asteroidId = setInterval(moveAsteroid, 600);
 }
 
 addRandomAsteroid();
@@ -246,14 +249,14 @@ function moveAsteroid() {
 
   if (currentAsteroidIndex >= squares.length) {
     clearInterval(asteroidId);
+    addRandomAsteroid();
   } else {
     addAsteroid(currentAsteroidIndex);
 
     if (squares[currentAsteroidIndex].classList.contains("shooter")) {
       resultDisplay.innerHTML = "GAME OVER";
       clearInterval(asteroidId);
+      clearInterval(invadersId);
     }
   }
 }
-
-asteroidId = setInterval(moveAsteroid, 600);
