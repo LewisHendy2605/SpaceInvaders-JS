@@ -3,7 +3,9 @@ const resultDisplay = document.querySelector(".results");
 const width = 15;
 const invadersRemoved = [];
 let currentShooterIndex = 202;
+let currentAsteroidIndex = 0;
 let invadersId;
+let asteroidId;
 let isGoingRight = true;
 let direction = 1;
 
@@ -15,7 +17,7 @@ for (let i = 0; i < width * width; i++) {
 
 const squares = Array.from(document.querySelectorAll(".grid div"));
 
-console.log(squares);
+//console.log(squares);
 
 // Hard Coded alien positions
 const alienInvaders = [
@@ -23,21 +25,26 @@ const alienInvaders = [
   32, 33, 34, 35, 36, 37, 38, 39,
 ];
 
+function addInvaders(i) {
+  const square = squares[alienInvaders[i]];
+  square.classList.add("invader");
+
+  // Check if the image is already appended
+  if (!square.querySelector("img")) {
+    const img = document.createElement("img");
+    img.src = "images/SpaceInvadersGreen.png";
+    img.alt = "InvaderImg"; // Adding alt text for accessibility
+    img.id = "invaderImg";
+    img.style.width = "100%"; // Ensures the image fits the square
+    img.style.height = "100%"; // Ensures the image fits the square
+    square.appendChild(img);
+  }
+}
+
 function draw() {
   for (let i = 0; i < alienInvaders.length; i++) {
     if (!invadersRemoved.includes(i)) {
-      const square = squares[alienInvaders[i]];
-      square.classList.add("invader");
-
-      // Check if the image is already appended
-      if (!square.querySelector("img")) {
-        const img = document.createElement("img");
-        img.src = "images/SpaceInvadersGreen.png";
-        img.alt = "Invader"; // Adding alt text for accessibility
-        img.style.width = "100%"; // Ensures the image fits the square
-        img.style.height = "100%"; // Ensures the image fits the square
-        square.appendChild(img);
-      }
+      addInvaders(i);
     }
   }
 }
@@ -63,7 +70,7 @@ document.addEventListener("keydown", moveShooter);
 function removeShooter() {
   const shooterElem = squares[currentShooterIndex];
   shooterElem.classList.remove("shooter");
-  const shooterImg = shooterElem.querySelector("img");
+  const shooterImg = shooterElem.querySelector("#shooterImg");
   if (shooterImg) {
     shooterImg.remove();
   }
@@ -85,7 +92,7 @@ function addShooter() {
   if (!shooter.querySelector("img")) {
     const img = document.createElement("img");
     img.src = "images/Ship.png";
-    img.alt = "Invader"; // Adding alt text for accessibility
+    img.id = "shooterImg";
     img.style.width = "100%"; // Ensures the image fits the square
     img.style.height = "100%"; // Ensures the image fits the square
     shooter.appendChild(img);
@@ -114,7 +121,7 @@ document.getElementById("rightBtn").addEventListener("click", moveShooterRight);
 function removeInvaders() {
   for (let i = 0; i < alienInvaders.length; i++) {
     squares[alienInvaders[i]].classList.remove("invader");
-    const img = squares[alienInvaders[i]].querySelector("img");
+    const img = squares[alienInvaders[i]].querySelector("#invaderImg");
     if (img) {
       img.remove(); // This removes the img element from the DOM
     }
@@ -196,3 +203,57 @@ function shoot(e) {
 
 document.addEventListener("keydown", shoot);
 document.getElementById("shootBtn").addEventListener("click", shoot);
+
+// Asteroids
+function addAsteroid(indexStart) {
+  const square = squares[indexStart];
+  square.classList.add("asteroid");
+
+  // Check if the image is already appended
+  if (!square.querySelector("img")) {
+    const img = document.createElement("img");
+    img.src = "images/asteroid.png";
+    img.id = "asteroidImg";
+    img.style.width = "100%"; // Ensures the image fits the square
+    img.style.height = "100%"; // Ensures the image fits the square
+    square.appendChild(img);
+  }
+}
+
+function removeAsteroid(index) {
+  const square = squares[index];
+  square.classList.remove("asteroid");
+  const img = square.querySelector("#asteroidImg");
+  if (img) {
+    img.remove(); // This removes the img element from the DOM
+  }
+}
+
+function addRandomAsteroid() {
+  // grid : 15 * 15
+  const GRID_WIDTH = 15;
+  // Returns a random integer from 0 to 1:
+  currentAsteroidIndex = Math.floor(Math.random() * 15);
+  addAsteroid(currentAsteroidIndex);
+}
+
+addRandomAsteroid();
+
+function moveAsteroid() {
+  removeAsteroid(currentAsteroidIndex);
+
+  currentAsteroidIndex += width;
+
+  if (currentAsteroidIndex >= squares.length) {
+    clearInterval(asteroidId);
+  } else {
+    addAsteroid(currentAsteroidIndex);
+
+    if (squares[currentAsteroidIndex].classList.contains("shooter")) {
+      resultDisplay.innerHTML = "GAME OVER";
+      clearInterval(asteroidId);
+    }
+  }
+}
+
+asteroidId = setInterval(moveAsteroid, 600);
